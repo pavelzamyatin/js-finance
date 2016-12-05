@@ -5,7 +5,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./server/app"
+    "start": "node ./server/app NODE_ENV=development",
+    "test": "node ./test/test NODE_ENV=test"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
