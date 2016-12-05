@@ -1,0 +1,20 @@
+{
+  "name": "finance",
+  "author": "corw",
+  "license": "ISC",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./server/app"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0"
+  }
+}
