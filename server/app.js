@@ -23,10 +23,14 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
   }
 });
 
+// tell express that we want to use EJS view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 // *** config middleware *** //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '../assets')));
+app.use(express.static(path.join(__dirname, 'assets')));
 
 // *** main routes *** //
 app.use('/', routes);

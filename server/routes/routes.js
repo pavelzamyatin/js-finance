@@ -3,7 +3,8 @@ var router = express.Router();
 var Entry = require('../models/entry');
 
 router.get('/', function(req, res, next) {
-  res.send('Hello, World!');
+  // res.send('Hello, World!');
+  res.render('index');
 });
 
 // *** api routes *** //
