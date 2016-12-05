@@ -165,7 +165,7 @@ section {
     margin: 20px 0 40px;
 }
 
-section::after {
+section:after {
     content: "";
     display: block;
     clear: both;
