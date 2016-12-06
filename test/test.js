@@ -70,5 +70,35 @@ describe('API Tests', function() {
       });
   });
 
+  it('show post a new entry on /api/entries POST', function(done) {
+    chai.request(server)
+      .post('/api/entries')
+      .send({
+        user      : "test user",
+        date      : new Date(),
+        sum       : 99.99,
+        category  : ["nice", "shot"],
+        comment   : "Post request simple test"
+      })
+      .end(function(err, res) {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('Object');
+
+        res.body.SUCCESS.should.have.property('_id');
+        res.body.SUCCESS.should.have.property('user');
+        res.body.SUCCESS.should.have.property('date');
+        res.body.SUCCESS.should.have.property('sum');
+        res.body.SUCCESS.should.have.property('category');
+        res.body.SUCCESS.should.have.property('comment');
+
+        res.body.SUCCESS.user.should.equal('test user');
+        res.body.SUCCESS.sum.should.equal(99.99);
+        res.body.SUCCESS.comment.should.equal('Post request simple test');
+
+        done();
+      });
+  });
+
 
 });
