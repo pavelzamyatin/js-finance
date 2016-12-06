@@ -4,80 +4,87 @@ var Entry = require('../models/entry');
 
 router.get('/', function(req, res, next) {
   // res.send('Hello, World!');
-  res.render('index', {title: 'Test'});
+  res.render('index', {
+    title: 'Index page'
+  });
 });
 
 // *** api routes *** //
-// router.get('/blobs', findAllBlobs);
-// router.get('/blob/:id', findBlobById);
-// router.post('/blobs', addBlob);
-// router.put('/blob/:id', updateBlob);
-// router.delete('/blob/:id', deleteBlob);
+router.get('/api/entries', findAllEntries);
+// router.get('/Entry/:id', findEntryById);
+router.post('/api/entries', addEntry);
+// router.put('/Entry/:id', updateEntry);
+// router.delete('/Entry/:id', deleteEntry);
 
 
-// // *** get ALL blobs *** //
-// function findAllBlobs(req, res) {
-//   Blob.find(function(err, blobs) {
+// *** get ALL Entries *** //
+function findAllEntries(req, res) {
+  Entry.find(function(err, entries) {
+    if(err) {
+      res.json({'ERROR': err});
+    } else {
+      res.json(entries);
+    }
+  });
+}
+
+// // *** get SINGLE Entries *** //
+// function findEntryById(req, res) {
+//   Entry.findById(req.params.id, function(err, Entry) {
 //     if(err) {
 //       res.json({'ERROR': err});
 //     } else {
-//       res.json(blobs);
+//       res.json(Entry);
 //     }
 //   });
 // }
+
+// *** post Entry *** //
+function addEntry(req, res) {
+
+  var newEntry = new Entry({
+    user      : req.body.user,
+    date      : new Date(),
+    sum       : req.body.sum,
+    category  : req.body.category,
+    comment   : req.body.comment
+  });
+
+  newEntry.save(function(err) {
+    if(err) {
+      res.json({'ERROR': err});
+    } else {
+      res.json({'SUCCESS': newEntry});
+    }
+  });
+}
 //
-// // *** get SINGLE blobs *** //
-// function findBlobById(req, res) {
-//   Blob.findById(req.params.id, function(err, blob) {
-//     if(err) {
-//       res.json({'ERROR': err});
-//     } else {
-//       res.json(blob);
-//     }
-//   });
-// }
-//
-// // *** post ALL blobs *** //
-// function addBlob(req, res) {
-//   var newBlob = new Blob({
-//     name: req.body.name,
-//     lastName: req.body.lastName
-//   });
-//   newBlob.save(function(err) {
-//     if(err) {
-//       res.json({'ERROR': err});
-//     } else {
-//       res.json({'SUCCESS': newBlob});
-//     }
-//   });
-// }
-//
-// // *** put SINGLE blob *** //
-// function updateBlob(req, res) {
-//   Blob.findById(req.params.id, function(err, blob) {
-//     blob.name = req.body.name;
-//     blob.lastName = req.body.lastName;
-//     blob.save(function(err) {
+// // *** put SINGLE Entry *** //
+// function updateEntry(req, res) {
+//   Entry.findById(req.params.id, function(err, Entry) {
+//     Entry.name = req.body.name;
+//     Entry.lastName = req.body.lastName;
+//     Entry.save(function(err) {
 //       if(err) {
 //         res.json({'ERROR': err});
 //       } else {
-//         res.json({'UPDATED': blob});
+//         res.json({'UPDATED': Entry});
 //       }
 //     });
 //   });
 // }
 //
-// // *** delete SINGLE blob *** //
-// function deleteBlob(req, res) {
-//   Blob.findById(req.params.id, function(err, blob) {
+// // *** delete SINGLE Entry *** //
+// function deleteEntry(req, res) {
+//   Entry.findById(req.params.id, function(err, Entry) {
 //     if(err) {
 //       res.json({'ERROR': err});
 //     } else {
-//       blob.remove(function(err){
+//       Entry.remove(function(err){
 //         if(err) {
 //           res.json({'ERROR': err});
 //         } else {
-//           res.json({'REMOVED': blob});
+//           res.json({'REMOVED': Entry});
 //         }
 //       });
 //     }

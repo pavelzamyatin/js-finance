@@ -23,3 +23,52 @@ describe('General Tests', function() {
       });
   });
 });
+
+describe('API Tests', function() {
+
+  // drop TEST collection
+  Entry.collection.drop();
+
+  beforeEach(function(done){
+    var newEntry = new Entry({
+      user      : "corw",
+      date      : new Date(),
+      sum       : 100.10,
+      category  : ["shop", "cafe"],
+      comment   : "New nice entry"
+    });
+
+    newEntry.save(function(err) {
+      done();
+    });
+  });
+
+  afterEach(function(done){
+    Entry.collection.drop();
+    done();
+  });
+
+  it('should list ALL entries on /api/entries GET', function(done) {
+    chai.request(server)
+      .get('/api/entries')
+      .end(function(err, res){
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('array');
+
+        res.body[0].should.have.property('_id');
+        res.body[0].should.have.property('user');
+        res.body[0].should.have.property('date');
+        res.body[0].should.have.property('sum');
+        res.body[0].should.have.property('category');
+        res.body[0].should.have.property('comment');
+
+        res.body[0].user.should.equal('corw');
+        res.body[0].sum.should.equal(100.1);
+        res.body[0].comment.should.equal('New nice entry')
+        done();
+      });
+  });
+
+
+});
