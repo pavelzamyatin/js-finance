@@ -100,5 +100,33 @@ describe('API Tests', function() {
       });
   });
 
+  it('should delete a SINGLE entry on /entry/<id> DELETE', function(done) {
+    // grabbing all entries to delere first element
+    chai.request(server)
+      .get('/api/entries')
+      .end(function(err, get_res) {
+        // removing first element of the table
+        chai.request(server)
+          .delete('/api/entry/' + get_res.body[0]._id)
+          .end(function(error, res){
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.have.property('REMOVED');
+            res.body.REMOVED.should.be.a('object');
+
+            res.body.REMOVED.should.have.property('_id');
+            res.body.REMOVED.should.have.property('date');
+            res.body.REMOVED.should.have.property('sum');
+            res.body.REMOVED.should.have.property('category');
+            res.body.REMOVED.should.have.property('comment');
+
+            res.body.REMOVED.user.should.equal('corw');
+            res.body.REMOVED.sum.should.equal(100.10);
+            res.body.REMOVED.comment.should.equal('New nice entry');
+
+            done();
+        });
+      });
+  });
 
 });

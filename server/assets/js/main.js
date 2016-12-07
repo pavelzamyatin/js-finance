@@ -15,6 +15,7 @@ $(document).ready(function() {
               <td>${value.user}</td>
               <td>${value.sum}</td>
               <td>${value.category}</td>
+              <td>${value.date}</td>
             </tr>
             `);
         });

@@ -11,10 +11,10 @@ router.get('/', function(req, res, next) {
 
 // *** api routes *** //
 router.get('/api/entries', findAllEntries);
-// router.get('/Entry/:id', findEntryById);
+router.get('/api/entry/:id', findEntryById);
 router.post('/api/entries', addEntry);
-// router.put('/Entry/:id', updateEntry);
-// router.delete('/Entry/:id', deleteEntry);
+router.put('/api/entry/:id', updateEntry);
+router.delete('/api/entry/:id', deleteEntry);
 
 
 // *** get ALL Entries *** //
@@ -28,23 +28,23 @@ function findAllEntries(req, res) {
   });
 }
 
-// // *** get SINGLE Entries *** //
-// function findEntryById(req, res) {
-//   Entry.findById(req.params.id, function(err, Entry) {
-//     if(err) {
-//       res.json({'ERROR': err});
-//     } else {
-//       res.json(Entry);
-//     }
-//   });
-// }
+// *** get SINGLE Entries *** //
+function findEntryById(req, res) {
+  Entry.findById(req.params.id, function(err, entry) {
+    if(err) {
+      res.json({'ERROR': err});
+    } else {
+      res.json(entry);
+    }
+  });
+}
 
 // *** post Entry *** //
 function addEntry(req, res) {
 
   var newEntry = new Entry({
     user      : req.body.user,
-    date      : new Date(),
+    date      : req.body.date,
     sum       : req.body.sum,
     category  : req.body.category,
     comment   : req.body.comment
@@ -58,37 +58,29 @@ function addEntry(req, res) {
     }
   });
 }
-//
-// // *** put SINGLE Entry *** //
-// function updateEntry(req, res) {
-//   Entry.findById(req.params.id, function(err, Entry) {
-//     Entry.name = req.body.name;
-//     Entry.lastName = req.body.lastName;
-//     Entry.save(function(err) {
-//       if(err) {
-//         res.json({'ERROR': err});
-//       } else {
-//         res.json({'UPDATED': Entry});
-//       }
-//     });
-//   });
-// }
-//
-// // *** delete SINGLE Entry *** //
-// function deleteEntry(req, res) {
-//   Entry.findById(req.params.id, function(err, Entry) {
-//     if(err) {
-//       res.json({'ERROR': err});
-//     } else {
-//       Entry.remove(function(err){
-//         if(err) {
-//           res.json({'ERROR': err});
-//         } else {
-//           res.json({'REMOVED': Entry});
-//         }
-//       });
-//     }
-//   });
-// }
+
+// *** put SINGLE Entry *** //
+function updateEntry(req, res) {
+  Entry.findById(req.params.id, function(err, entry) {
+    Entry.name = req.body.sum;
+    Entry.save(function(err) {
+      if(err) {
+        res.json({'ERROR': err});
+      } else {
+        res.json({'UPDATED': entry});
+      }
+    });
+  });
+}
+
+function deleteEntry(req, res) {
+  Entry.findByIdAndRemove(req.params.id, function (err, entry) {
+    if(err) {
+      res.json({'ERROR': err});
+    } else {
+      res.json({'REMOVED': entry});
+    }
+  });
+}
 
 module.exports = router;
