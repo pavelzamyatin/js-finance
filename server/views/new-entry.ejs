@@ -1,4 +1,82 @@
-<section id="new-entry" class="new">
-  <h2>New Entry Block</h2>
-  <p>quatis alique mos et aut occae cum, veliquaspit quo quam, si idem reprorisqui doluptatur accum si sunt ut officiisto enecab id et aut es et laboribusam endi rerum as minullorent officiatum non cuscium quuntem</p>
-</section>
+<div id="new-entry" class="container-fluid" >
+
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1">New entry Block</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">
+
+          <form class="form-horizontal">
+            <fieldset>
+            <!-- <legend>Legend</legend> -->
+
+            <!-- Date input -->
+            <div class="form-group">
+              <label class="col-lg-2 control-label" for="inputDate">Date</label>
+              <div class="col-lg-10">
+                <input class="form-control" id="inputDate" name="inputDate" placeholder="mm/dd/yyyy" type="text"/>
+              </div>
+            </div>
+
+            <script>
+              $(document).ready(function(){
+                $('#inputDate').datepicker({
+                  calendarWeeks: true,
+                  todayHighlight: true
+                });
+              })
+            </script>
+
+            <div class="form-group">
+              <label for="inputEmail" class="col-lg-2 control-label">Sum</label>
+              <div class="col-lg-10">
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input class="form-control" id="inputSum" name="inputSum" placeholder="money" type="text"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Category</label>
+              <div class="col-lg-10">
+                <select class="form-control" id="selectCategory">
+                  <option>Home</option>
+                  <option>Market</option>
+                  <option>Electronics</option>
+                  <option>Gifts</option>
+                  <option>Cafe</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="textArea" class="col-lg-2 control-label">Comment</label>
+              <div class="col-lg-10">
+                <textarea class="form-control" rows="2" id="inputText"></textarea>
+                <!-- <span class="help-block">Some text</span> -->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+
+          </fieldset>
+          </form>
+
+        </div>
+        <!-- <div class="panel-footer">Panel Footer</div> -->
+      </div>
+    </div>
+  </div>
+
+
+</div>

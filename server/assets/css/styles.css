@@ -198,7 +198,7 @@ section:after {
 
 /* /////////////////// SECTIONS /////////////////// */
 
-#show-button {
+.button {
     display: block;
     padding: 5px;
     margin: 10px;

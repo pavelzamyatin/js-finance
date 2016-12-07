@@ -5,23 +5,25 @@
   <head>
     <title>CRW Finance Page</title>
     <!-- Styles -->
-    <link href="css/styles.css" type="text/css" rel="stylesheet">
-
-    <!-- scripts -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <!-- jquery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
             crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
+    <!-- bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css"/>
   </head>
 
   <body>
 
-    <div id="wrapper">
-      <% include header.ejs %>
-      <% include new-entry.ejs %>
-      <% include main.ejs %>
-      <% include footer.ejs %>
-    </div>
+    <% include header.ejs %>
+    <% include new-entry.ejs %>
+    <% include main.ejs %>
 
+    <!-- main script -->
+    <script src="js/main.js"></script>
   </body>
 
 </html>
