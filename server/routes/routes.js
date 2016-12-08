@@ -38,9 +38,9 @@ router.get('/api/entry/:id', function findEntryById(req, res) {
 router.post('/api/entries', function addEntry(req, res) {
 
   var newEntry = new Entry({
-    user      : validator.escape(req.body.user),
-    date      : validator.escape(req.body.date),
-    sum       : validator.escape(req.body.sum),
+    user      : req.body.user,
+    date      : validator.toDate(req.body.date),
+    sum       : validator.toFloat(req.body.sum),
     category  : validator.escape(req.body.category),
     comment   : validator.escape(req.body.comment)
   });
