@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Entry = require('../models/entry');
+var validator = require('validator');
 
 router.get('/', function(req, res, next) {
   // res.send('Hello, World!');
@@ -37,11 +38,11 @@ router.get('/api/entry/:id', function findEntryById(req, res) {
 router.post('/api/entries', function addEntry(req, res) {
 
   var newEntry = new Entry({
-    user      : req.body.user,
-    date      : req.body.date,
-    sum       : req.body.sum,
-    category  : req.body.category,
-    comment   : req.body.comment
+    user      : validator.escape(req.body.user),
+    date      : validator.escape(req.body.date),
+    sum       : validator.escape(req.body.sum),
+    category  : validator.escape(req.body.category),
+    comment   : validator.escape(req.body.comment)
   });
 
   newEntry.save(function(err) {

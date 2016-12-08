@@ -16,6 +16,7 @@ $(document).ready(function() {
               <td>${value.sum}</td>
               <td>${value.category}</td>
               <td>${value.date}</td>
+              <td>${value.comment}</td>
             </tr>
             `);
         });
