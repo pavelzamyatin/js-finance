@@ -9,16 +9,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
-// *** api routes *** //
-router.get('/api/entries', findAllEntries);
-router.get('/api/entry/:id', findEntryById);
-router.post('/api/entries', addEntry);
-router.put('/api/entry/:id', updateEntry);
-router.delete('/api/entry/:id', deleteEntry);
-
-
 // *** get ALL Entries *** //
-function findAllEntries(req, res) {
+router.get('/api/entries', function findAllEntries(req, res) {
   Entry.find(function(err, entries) {
     if(err) {
       res.json({'ERROR': err});
@@ -26,10 +18,11 @@ function findAllEntries(req, res) {
       res.json(entries);
     }
   });
-}
+});
+
 
 // *** get SINGLE Entries *** //
-function findEntryById(req, res) {
+router.get('/api/entry/:id', function findEntryById(req, res) {
   Entry.findById(req.params.id, function(err, entry) {
     if(err) {
       res.json({'ERROR': err});
@@ -37,10 +30,11 @@ function findEntryById(req, res) {
       res.json(entry);
     }
   });
-}
+});
+
 
 // *** post Entry *** //
-function addEntry(req, res) {
+router.post('/api/entries', function addEntry(req, res) {
 
   var newEntry = new Entry({
     user      : req.body.user,
@@ -57,10 +51,10 @@ function addEntry(req, res) {
       res.json({'SUCCESS': newEntry});
     }
   });
-}
+});
 
 // *** put SINGLE Entry *** //
-function updateEntry(req, res) {
+router.put('/api/entry/:id', function updateEntry(req, res) {
   Entry.findById(req.params.id, function(err, entry) {
     Entry.name = req.body.sum;
     Entry.save(function(err) {
@@ -71,9 +65,10 @@ function updateEntry(req, res) {
       }
     });
   });
-}
+});
 
-function deleteEntry(req, res) {
+// *** delete single Entry *** //
+router.delete('/api/entry/:id', function deleteEntry(req, res) {
   Entry.findByIdAndRemove(req.params.id, function (err, entry) {
     if(err) {
       res.json({'ERROR': err});
@@ -81,6 +76,6 @@ function deleteEntry(req, res) {
       res.json({'REMOVED': entry});
     }
   });
-}
+});
 
 module.exports = router;

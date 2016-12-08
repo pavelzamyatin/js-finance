@@ -26,7 +26,8 @@
               $(document).ready(function(){
                 $('#inputDate').datepicker({
                   calendarWeeks: true,
-                  todayHighlight: true
+                  todayHighlight: true,
+                  autoclose: true
                 });
               })
             </script>
@@ -44,7 +45,7 @@
             <div class="form-group">
               <label for="select" class="col-lg-2 control-label">Category</label>
               <div class="col-lg-10">
-                <select class="form-control" id="selectCategory">
+                <select class="form-control" id="selectCategory" name="selectCategory">
                   <option>Home</option>
                   <option>Market</option>
                   <option>Electronics</option>
@@ -57,7 +58,7 @@
             <div class="form-group">
               <label for="textArea" class="col-lg-2 control-label">Comment</label>
               <div class="col-lg-10">
-                <textarea class="form-control" rows="2" id="inputText" placeholder="Write here something..."></textarea>
+                <textarea class="form-control" rows="2" id="inputText" name="inputText" placeholder="Write here something..."></textarea>
                 <!-- <span class="help-block">Some text</span> -->
               </div>
             </div>
