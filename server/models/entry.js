@@ -5,7 +5,7 @@ var entrySchema = new Schema({
   user    : { type: String, required: true},
   date      : { type: Date, required: true},
   sum       : { type: Number, required: true},
-  category  : { type: [], required: true},
+  category  : { type: String, required: true},
   comment   : { type: String }
 });
 

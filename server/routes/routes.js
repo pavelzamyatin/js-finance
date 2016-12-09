@@ -40,7 +40,7 @@ router.post('/api/entries', function addEntry(req, res) {
   var newEntry = new Entry({
     user      : req.body.user,
     date      : validator.toDate(req.body.date),
-    sum       : validator.toFloat(req.body.sum),
+    sum       : validator.toFloat(req.body.sum.toString()),
     category  : validator.escape(req.body.category),
     comment   : validator.escape(req.body.comment)
   });

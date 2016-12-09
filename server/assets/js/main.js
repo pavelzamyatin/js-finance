@@ -57,7 +57,6 @@ $(document).ready(function() {
 
   // POST NEW ENTRY BUTTON TEST
   $('#post-entry-button').click(function() {
-    var arr = JSON.stringify(['fuck', 'you', 'bitch']);
 
     $.ajax({
       type: 'POST',
@@ -67,7 +66,7 @@ $(document).ready(function() {
         user      : "ajax",
         date      : new Date(),
         sum       : 88.88,
-        category  : arr,
+        category  : "category string",
         comment   : "Post request from ajax"
       },
       success: function(data) {

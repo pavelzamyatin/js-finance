@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 // describe() is used for grouping tests in a logical manner.
 // it() statements contain each individual test case
-describe('General Tests', function() {
+describe('General Tests: ', function() {
 
   it('should show main page', function(done) {
     chai.request(server)
@@ -24,7 +24,7 @@ describe('General Tests', function() {
   });
 });
 
-describe('API Tests', function() {
+describe('API Tests: ', function() {
 
   // drop TEST collection
   Entry.collection.drop();
@@ -70,15 +70,15 @@ describe('API Tests', function() {
       });
   });
 
-  it('show post a new entry on /api/entries POST', function(done) {
+  it('should post a new entry on /api/entries POST', function(done) {
     chai.request(server)
       .post('/api/entries')
       .send({
-        user      : "test user",
+        user      : "test",
         date      : new Date(),
         sum       : 99.99,
-        category  : ["nice", "shot"],
-        comment   : "Post request simple test"
+        category  : "Home",
+        comment   : "POST request simple test"
       })
       .end(function(err, res) {
         res.should.have.status(200);
@@ -92,9 +92,9 @@ describe('API Tests', function() {
         res.body.SUCCESS.should.have.property('category');
         res.body.SUCCESS.should.have.property('comment');
 
-        res.body.SUCCESS.user.should.equal('test user');
+        res.body.SUCCESS.user.should.equal('test');
         res.body.SUCCESS.sum.should.equal(99.99);
-        res.body.SUCCESS.comment.should.equal('Post request simple test');
+        res.body.SUCCESS.comment.should.equal('POST request simple test');
 
         done();
       });
