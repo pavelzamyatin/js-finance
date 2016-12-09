@@ -12,11 +12,19 @@ router.get('/', function(req, res, next) {
 
 // *** get ALL Entries *** //
 router.get('/api/entries', function findAllEntries(req, res) {
-  Entry.find(function(err, entries) {
+  Entry.find({}, function(err, entries) {
     if(err) {
-      res.json({'ERROR': err});
+      res.json({
+          "STATUS": "ERROR",
+          "ERROR": err,
+          "ITEMS": []
+      });
     } else {
-      res.json(entries);
+      res.json({
+          "STATUS": "SUCCESS",
+          "ERROR": "",
+          "ITEMS": entries
+      });
     }
   });
 });
@@ -47,9 +55,17 @@ router.post('/api/entries', function addEntry(req, res) {
 
   newEntry.save(function(err) {
     if(err) {
-      res.json({'ERROR': err});
+      res.json({
+          "STATUS": "ERROR",
+          "ERROR": err,
+          "ITEMS": [newEntry]
+      });
     } else {
-      res.json({'SUCCESS': newEntry});
+      res.json({
+          "STATUS": "SUCCESS",
+          "ERROR": "",
+          "ITEMS": [newEntry]
+      });
     }
   });
 });

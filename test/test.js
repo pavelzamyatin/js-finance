@@ -54,18 +54,25 @@ describe('API Tests: ', function() {
       .end(function(err, res){
         res.should.have.status(200);
         res.should.be.json;
-        res.body.should.be.a('array');
+        res.body.should.be.a('Object');
 
-        res.body[0].should.have.property('_id');
-        res.body[0].should.have.property('user');
-        res.body[0].should.have.property('date');
-        res.body[0].should.have.property('sum');
-        res.body[0].should.have.property('category');
-        res.body[0].should.have.property('comment');
+        res.body.should.have.property('STATUS');
+        res.body.should.have.property('ERROR');
+        res.body.should.have.property('ITEMS');
 
-        res.body[0].user.should.equal('corw');
-        res.body[0].sum.should.equal(100.1);
-        res.body[0].comment.should.equal('New nice entry')
+        res.body.STATUS.should.equal('SUCCESS');
+        res.body.ERROR.should.equal('');
+        res.body.ITEMS.should.be.a('Array');
+
+        res.body.ITEMS[0].should.have.property('user');
+        res.body.ITEMS[0].should.have.property('date');
+        res.body.ITEMS[0].should.have.property('sum');
+        res.body.ITEMS[0].should.have.property('category');
+        res.body.ITEMS[0].should.have.property('comment');
+
+        res.body.ITEMS[0].user.should.equal('corw');
+        res.body.ITEMS[0].sum.should.equal(100.1);
+        res.body.ITEMS[0].comment.should.equal('New nice entry')
         done();
       });
   });
@@ -85,16 +92,24 @@ describe('API Tests: ', function() {
         res.should.be.json;
         res.body.should.be.a('Object');
 
-        res.body.SUCCESS.should.have.property('_id');
-        res.body.SUCCESS.should.have.property('user');
-        res.body.SUCCESS.should.have.property('date');
-        res.body.SUCCESS.should.have.property('sum');
-        res.body.SUCCESS.should.have.property('category');
-        res.body.SUCCESS.should.have.property('comment');
+        res.body.should.have.property('STATUS');
+        res.body.should.have.property('ERROR');
+        res.body.should.have.property('ITEMS');
 
-        res.body.SUCCESS.user.should.equal('test');
-        res.body.SUCCESS.sum.should.equal(99.99);
-        res.body.SUCCESS.comment.should.equal('POST request simple test');
+        res.body.STATUS.should.equal('SUCCESS');
+        res.body.ERROR.should.equal('');
+        res.body.ITEMS.should.be.a('Array');
+
+        res.body.ITEMS[0].should.have.property('_id');
+        res.body.ITEMS[0].should.have.property('user');
+        res.body.ITEMS[0].should.have.property('date');
+        res.body.ITEMS[0].should.have.property('sum');
+        res.body.ITEMS[0].should.have.property('category');
+        res.body.ITEMS[0].should.have.property('comment');
+
+        res.body.ITEMS[0].user.should.equal('test');
+        res.body.ITEMS[0].sum.should.equal(99.99);
+        res.body.ITEMS[0].comment.should.equal('POST request simple test');
 
         done();
       });
@@ -107,7 +122,7 @@ describe('API Tests: ', function() {
       .end(function(err, get_res) {
         // removing first element of the table
         chai.request(server)
-          .delete('/api/entry/' + get_res.body[0]._id)
+          .delete('/api/entry/' + get_res.body.ITEMS[0]._id)
           .end(function(error, res){
             res.should.have.status(200);
             res.should.be.json;

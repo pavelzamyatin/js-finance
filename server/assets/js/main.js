@@ -6,9 +6,9 @@ $(document).ready(function() {
     $.ajax({
       type: 'GET',
       url: '/api/entries',
-      success: function(array) {
-        console.log(array);
-        var newHTML = $.map(array, function(value) {
+      success: function(response) {
+        console.log(response);
+        var newHTML = $.map(response.ITEMS, function(value) {
           return (`
             <tr>
               <td>${value._id}</td>
