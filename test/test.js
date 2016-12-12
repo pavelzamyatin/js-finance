@@ -35,7 +35,7 @@ describe('API Tests: ', function() {
       date      : new Date(),
       sum       : 100.10,
       category  : ["shop", "cafe"],
-      comment   : "New nice entry"
+      comment   : "New nice entry specially for testing reasons"
     });
 
     newEntry.save(function(err) {
@@ -72,8 +72,42 @@ describe('API Tests: ', function() {
 
         res.body.ITEMS[0].user.should.equal('corw');
         res.body.ITEMS[0].sum.should.equal(100.1);
-        res.body.ITEMS[0].comment.should.equal('New nice entry')
+        res.body.ITEMS[0].comment.should.equal('New nice entry specially for testing reasons')
         done();
+      });
+  });
+
+  it('should get entry by ID on /api/entry/:id GET', function(done) {
+    // grabbing all entries to show the first element
+    chai.request(server)
+      .get('/api/entries')
+      .end(function(err, get_res) {
+        chai.request(server)
+          .get('/api/entry/' + get_res.body.ITEMS[0]._id)
+          .end(function(error, res){
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a('Object');
+
+            res.body.should.have.property('STATUS');
+            res.body.should.have.property('ERROR');
+            res.body.should.have.property('ITEMS');
+
+            res.body.STATUS.should.equal('SUCCESS');
+            res.body.ERROR.should.equal('');
+            res.body.ITEMS.should.be.a('Array');
+
+            res.body.ITEMS[0].should.have.property('user');
+            res.body.ITEMS[0].should.have.property('date');
+            res.body.ITEMS[0].should.have.property('sum');
+            res.body.ITEMS[0].should.have.property('category');
+            res.body.ITEMS[0].should.have.property('comment');
+
+            res.body.ITEMS[0].user.should.equal('corw');
+            res.body.ITEMS[0].sum.should.equal(100.1);
+            res.body.ITEMS[0].comment.should.equal('New nice entry specially for testing reasons')
+            done();
+          });
       });
   });
 
@@ -137,10 +171,10 @@ describe('API Tests: ', function() {
 
             res.body.REMOVED.user.should.equal('corw');
             res.body.REMOVED.sum.should.equal(100.10);
-            res.body.REMOVED.comment.should.equal('New nice entry');
+            res.body.REMOVED.comment.should.equal('New nice entry specially for testing reasons');
 
             done();
-        });
+          });
       });
   });
 

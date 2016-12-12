@@ -34,9 +34,17 @@ router.get('/api/entries', function findAllEntries(req, res) {
 router.get('/api/entry/:id', function findEntryById(req, res) {
   Entry.findById(req.params.id, function(err, entry) {
     if(err) {
-      res.json({'ERROR': err});
+      res.json({
+          "STATUS": "ERROR",
+          "ERROR": err,
+          "ITEMS": []
+      });
     } else {
-      res.json(entry);
+      res.json({
+          "STATUS": "SUCCESS",
+          "ERROR": "",
+          "ITEMS": [entry]
+      });
     }
   });
 });
