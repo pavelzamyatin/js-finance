@@ -18,10 +18,12 @@ $(document).ready(function() {
         comment   : formData[3].value
       },
       success: function(data) {
+        myNotify('New entry posted successfuly!', 'success');
         console.log(data);
       },
-      error: function(err){
-        alert(err);
+      error: function(err) {
+        myNotify('Problem accured during post process, please see console log', 'danger');
+        console.log(err);
       }
     });
     e.preventDefault();
@@ -31,6 +33,21 @@ $(document).ready(function() {
   // =======================================
   // ============== TEST ZONE ==============
   // =======================================
+
+  // SHOW ALL ENTRIES
+  var showALLEntries = function() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/entries',
+      success: function(data) {
+        showTable(data)
+      },
+      error: function(err){
+        myNotify('Problem accured during operation, please see console log', 'danger');
+        console.log(err);
+      }
+    });
+  };
 
   // This function helps to show data in the table from the API GET request
   var showTable = function(res) {
@@ -50,25 +67,48 @@ $(document).ready(function() {
     $("#main-table").html(newHTML.join(""));
   };
 
-  // GET all entries
-  $('#show-all-button').click(function() {
-    $.ajax({
-      type: 'GET',
-      url: '/api/entries',
-      success: function(response) { showTable(response) },
-      error: function(err){
-        console.log(err);
+  // This function helps to help notification using Bootstrap Notify
+  var myNotify = function(message, type) {
+    $.notify({
+      message: message
+    }, {
+      type: type,
+      placement: {
+        from: 'bottom'
       }
     });
-  });
+  };
+
+  // GET all entries
+  $('#show-all-button').click(showALLEntries);
 
   // GET entry by ID
   $('#show-id-button').click(function() {
     $.ajax({
       type: 'GET',
       url: '/api/entry/' + $('#inputId')[0].value,
-      success: function(response) { showTable(response) },
-      error: function(err){
+      success: function(data) {
+        showTable(data);
+      },
+      error: function(err) {
+        myNotify('Problem accured during operation, please see console log', 'danger');
+        console.log(err);
+      }
+    });
+  });
+
+  // DELETE entry by ID
+  $('#delete-id-button').click(function() {
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/entry/' + $('#inputId')[0].value,
+      success: function(response) {
+        myNotify(`Enrtry ID: ${$('#inputId')[0].value} deleted successfuly`, 'warning');
+        $('#inputId')[0].value = '';
+        showALLEntries();
+      },
+      error: function(err) {
+        myNotify('Problem accured during operation, please see console log', 'danger');
         console.log(err);
       }
     });
@@ -89,9 +129,12 @@ $(document).ready(function() {
         comment   : "POST request from AJAX"
       },
       success: function(data) {
+        myNotify('New entry posted successfuly!', 'success');
+        showALLEntries();
         console.log(data);
       },
-      error: function(err){
+      error: function(err) {
+        myNotify('Problem accured during operation, please see console log', 'danger');
         console.log(err);
       }
     });
