@@ -67,7 +67,7 @@ $(document).ready(function() {
         date      : new Date(),
         sum       : 88.88,
         category  : "category string",
-        comment   : "Post request from ajax"
+        comment   : "POST request from AJAX"
       },
       success: function(data) {
         console.log(data);

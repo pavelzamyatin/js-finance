@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "node ./server/app NODE_ENV=development",
-    "test": "node ./test/test NODE_ENV=test"
+    "test": "mocha test/test.js --reporter mochawesome"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-http": "^3.0.0"
+    "chai-http": "^3.0.0",
+    "mochawesome": "^1.5.4"
   }
 }
