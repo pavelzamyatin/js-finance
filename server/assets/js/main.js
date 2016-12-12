@@ -2,33 +2,38 @@ $(document).ready(function() {
   console.log('main.js is ready');
 
   // POST FROM form
-  $('form').on('submit', function(e) {
+  $('form').validator().on('submit', function(e) {
     var formData = $('form').serializeArray();
     // console.log(formData);
-
-    $.ajax({
-      type: 'POST',
-      url: '/api/entries',
-      dataType: "json",
-      data: {
-        user      : 'form',
-        date      : formData[0].value,
-        sum       : formData[1].value,
-        category  : formData[2].value,
-        comment   : formData[3].value
-      },
-      success: function(data) {
-        myNotify('New entry posted successfuly!', 'success');
-        showALLEntries();
-        console.log(data);
-      },
-      error: function(err) {
-        myNotify('Problem accured during post process, please see console log', 'danger');
-        console.log(err);
+    if (e.isDefaultPrevented()) {
+        // handle the invalid form...
+        myNotify('Check the form, please!', 'danger');
+      } else {
+        // everything looks good!
+        $.ajax({
+          type: 'POST',
+          url: '/api/entries',
+          dataType: "json",
+          data: {
+            user      : 'form',
+            date      : formData[0].value,
+            sum       : formData[1].value,
+            category  : formData[2].value,
+            comment   : formData[3].value
+          },
+          success: function(data) {
+            myNotify('New entry posted successfuly!', 'success');
+            showALLEntries();
+            console.log(data);
+          },
+          error: function(err) {
+            myNotify('Problem accured during post process, please see console log', 'danger');
+            console.log(err);
+          }
+        });
+        e.preventDefault();
       }
-    });
-    e.preventDefault();
-  })
+  });
 
   // =======================================
   // ============== TEST ZONE ==============

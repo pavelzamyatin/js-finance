@@ -10,7 +10,7 @@
       <div id="collapse1" class="panel-collapse collapse in">
         <div class="panel-body">
 
-          <form class="form-horizontal">
+          <form class="form-horizontal" data-toggle="validator">
             <fieldset>
             <!-- <legend>Legend</legend> -->
 
@@ -18,7 +18,7 @@
             <div class="form-group">
               <label class="col-lg-2 control-label" for="inputDate">Date</label>
               <div class="col-lg-10">
-                <input class="form-control" id="inputDate" name="inputDate" placeholder="mm/dd/yyyy" type="text"/>
+                <input class="form-control" id="inputDate" name="inputDate" placeholder="mm/dd/yyyy" type="text" required/>
               </div>
             </div>
 
@@ -37,7 +37,7 @@
               <div class="col-lg-10">
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <input class="form-control" id="inputSum" name="inputSum" placeholder="money" type="text"/>
+                  <input class="form-control" id="inputSum" name="inputSum" placeholder="money" type="number" required/>
                 </div>
               </div>
             </div>
