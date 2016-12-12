@@ -149,6 +149,48 @@ describe('API Tests: ', function() {
       });
   });
 
+  it('should change an entry on /api/entry/:id PUT', function(done) {
+    // grabbing all entries to show the first element
+    chai.request(server)
+      .get('/api/entries')
+      .end(function(err, get_res) {
+        chai.request(server)
+          .put('/api/entry/' + get_res.body.ITEMS[0]._id)
+          .send({
+            date      : new Date(),
+            sum       : 200.20,
+            category  : "Gardening",
+            comment   : "PUT request simple test passed"
+          })
+          .end(function(err, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a('Object');
+
+            res.body.should.have.property('STATUS');
+            res.body.should.have.property('ERROR');
+            res.body.should.have.property('ITEMS');
+
+            res.body.STATUS.should.equal('SUCCESS');
+            res.body.ERROR.should.equal('');
+            res.body.ITEMS.should.be.a('Array');
+
+            res.body.ITEMS[0].should.have.property('_id');
+            res.body.ITEMS[0].should.have.property('user');
+            res.body.ITEMS[0].should.have.property('date');
+            res.body.ITEMS[0].should.have.property('sum');
+            res.body.ITEMS[0].should.have.property('category');
+            res.body.ITEMS[0].should.have.property('comment');
+
+            res.body.ITEMS[0].sum.should.equal(200.20);
+            res.body.ITEMS[0].category.should.equal('Gardening');
+            res.body.ITEMS[0].comment.should.equal('PUT request simple test passed');
+
+            done();
+          });
+      });
+  });
+
   it('should delete a SINGLE entry on /entry/<id> DELETE', function(done) {
     // grabbing all entries to delere first element
     chai.request(server)
