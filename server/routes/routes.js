@@ -107,9 +107,17 @@ router.put('/api/entry/:id', function updateEntry(req, res) {
 router.delete('/api/entry/:id', function deleteEntry(req, res) {
   Entry.findByIdAndRemove(req.params.id, function (err, entry) {
     if (err) {
-      res.json({'ERROR': err});
+      res.json({
+          "STATUS": "ERROR",
+          "ERROR": err,
+          "ITEMS": []
+      });
     } else {
-      res.json({'REMOVED': entry});
+      res.json({
+          "STATUS": "SUCCESS",
+          "ERROR": "",
+          "ITEMS": [entry]
+      });
     }
   });
 });

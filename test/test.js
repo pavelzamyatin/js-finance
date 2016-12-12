@@ -103,6 +103,7 @@ describe('API Tests: ', function() {
             res.body.ITEMS[0].should.have.property('category');
             res.body.ITEMS[0].should.have.property('comment');
 
+            res.body.ITEMS[0]._id.should.equal(get_res.body.ITEMS[0]._id);
             res.body.ITEMS[0].user.should.equal('corw');
             res.body.ITEMS[0].sum.should.equal(100.1);
             res.body.ITEMS[0].comment.should.equal('New nice entry specially for testing reasons')
@@ -182,6 +183,7 @@ describe('API Tests: ', function() {
             res.body.ITEMS[0].should.have.property('category');
             res.body.ITEMS[0].should.have.property('comment');
 
+            res.body.ITEMS[0]._id.should.equal(get_res.body.ITEMS[0]._id);
             res.body.ITEMS[0].sum.should.equal(200.20);
             res.body.ITEMS[0].category.should.equal('Gardening');
             res.body.ITEMS[0].comment.should.equal('PUT request simple test passed');
@@ -199,21 +201,21 @@ describe('API Tests: ', function() {
         // removing first element of the table
         chai.request(server)
           .delete('/api/entry/' + get_res.body.ITEMS[0]._id)
-          .end(function(error, res){
+          .end(function(error, res) {
             res.should.have.status(200);
             res.should.be.json;
-            res.body.should.have.property('REMOVED');
-            res.body.REMOVED.should.be.a('object');
+            res.body.should.be.a('Object');
 
-            res.body.REMOVED.should.have.property('_id');
-            res.body.REMOVED.should.have.property('date');
-            res.body.REMOVED.should.have.property('sum');
-            res.body.REMOVED.should.have.property('category');
-            res.body.REMOVED.should.have.property('comment');
+            res.body.should.have.property('STATUS');
+            res.body.should.have.property('ERROR');
+            res.body.should.have.property('ITEMS');
 
-            res.body.REMOVED.user.should.equal('corw');
-            res.body.REMOVED.sum.should.equal(100.10);
-            res.body.REMOVED.comment.should.equal('New nice entry specially for testing reasons');
+            res.body.STATUS.should.equal('SUCCESS');
+            res.body.ERROR.should.equal('');
+            res.body.ITEMS.should.be.a('Array');
+
+            res.body.ITEMS[0].should.have.property('_id');
+            res.body.ITEMS[0]._id.should.equal(get_res.body.ITEMS[0]._id);
 
             done();
           });
