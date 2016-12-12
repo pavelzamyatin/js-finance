@@ -19,6 +19,7 @@ $(document).ready(function() {
       },
       success: function(data) {
         myNotify('New entry posted successfuly!', 'success');
+        showALLEntries();
         console.log(data);
       },
       error: function(err) {
@@ -27,7 +28,6 @@ $(document).ready(function() {
       }
     });
     e.preventDefault();
-    return false;
   })
 
   // =======================================
