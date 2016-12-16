@@ -13,14 +13,14 @@ $(document).ready(function() {
         $.ajax({
           type: 'POST',
           url: '/api/entries',
-          headers: { "X-CSRF-Token": $('input[type="hidden"]')[0].value },
+          headers: { "X-CSRF-Token": $('input[name="_csrf"]')[0].value },
           dataType: "json",
           data: {
-            user      : 'form',
-            date      : formData[1].value,
-            sum       : formData[2].value,
-            category  : formData[3].value,
-            comment   : formData[4].value
+            user      : $('input[name="_userID"]')[0].value,
+            date      : formData[2].value,
+            sum       : formData[3].value,
+            category  : formData[4].value,
+            comment   : formData[5].value
           },
           success: function(data) {
             myNotify('New entry posted successfuly!', 'success');
@@ -62,7 +62,7 @@ $(document).ready(function() {
       return (`
         <tr>
           <td>${value._id}</td>
-          <td>${value.user}</td>
+          <td>${value.user.toString().slice(-5)}</td>
           <td>${value.sum}</td>
           <td>${value.category}</td>
           <td>${value.date}</td>
@@ -129,7 +129,7 @@ $(document).ready(function() {
       headers: { "X-CSRF-Token": $('input[type="hidden"]')[0].value },
       dataType: "json",
       data: {
-        user      : "ajax",
+        user      : $('input[name="_userID"]')[0].value,
         date      : new Date(),
         sum       : 88.88,
         category  : "category string",

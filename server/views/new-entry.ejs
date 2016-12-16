@@ -11,9 +11,11 @@
         <div class="panel-body">
 
           <form id="new-entry-form" class="form-horizontal" data-toggle="validator">
-            <!-- CSRF check -->
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <!-- <legend>Legend</legend> -->
+
+            <!-- CSRF and USER check -->
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="_userID" value="<%= id %>">
 
             <!-- Date input -->
             <div class="form-group">
@@ -32,6 +34,7 @@
               })
             </script>
 
+            <!-- SUM input -->
             <div class="form-group">
               <label for="inputSum" class="col-lg-2 control-label">Sum</label>
               <div class="col-lg-10">
@@ -43,6 +46,7 @@
               </div>
             </div>
 
+            <!-- Category input -->
             <div class="form-group">
               <label for="select" class="col-lg-2 control-label">Category</label>
               <div class="col-lg-10">
@@ -56,6 +60,7 @@
               </div>
             </div>
 
+            <!-- Comment input -->
             <div class="form-group">
               <label for="textArea" class="col-lg-2 control-label">Comment</label>
               <div class="col-lg-10">
