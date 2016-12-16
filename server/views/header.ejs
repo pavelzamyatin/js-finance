@@ -14,10 +14,10 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="#"><strong>Id</strong>: <%= id %></a></li>
+          <li><a href="#"><strong>Id</strong>: <%= id.toString().slice(-5) %></a></li>
           <li><a href="#"><strong>Email</strong>: <%= email %></a></li>
-          <li><a href="#"><strong>Cookie</strong>: <%= sess %></a></li>
-          <li><a href="#"><strong>CSRF Token</strong>: <%= csrfToken %></a></li>
+          <li><a href="#"><strong>Cookie</strong>: <%= sess.toString().slice(-5) %></a></li>
+          <li><a href="#"><strong>CSRF Token</strong>: <%= csrfToken.toString().slice(-5) %></a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

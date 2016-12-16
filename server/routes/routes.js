@@ -18,9 +18,9 @@ router.get('/', function(req, res, next) {
 router.get('/main', isLoggedIn, csrfProtection, function(req, res, next) {
   res.render('main', {
     title : 'Main page',
-    id    : req.user._id.toString().slice(-5),
+    id    : req.user._id,
     email : req.user.local.email,
-    sess  : req.cookies['connect.sid'].toString().slice(-5),
+    sess  : req.cookies['connect.sid'],
     csrfToken: req.csrfToken()
   });
 });
@@ -47,15 +47,16 @@ router.post('/login', csrfProtection, passport.authenticate('local-login', {
 // =========================================================================
 // SIGNUP ROUTES ===========================================================
 // =========================================================================
-router.get('/signup', function(req, res) {
+router.get('/signup', csrfProtection, function(req, res) {
     res.render('signup.ejs', {
       title: 'Signup page',
-      message: req.flash('signupMessage')
+      message: req.flash('signupMessage'),
+      csrfToken : req.csrfToken()
     });
 });
 
 // process the signup form
-router.post('/signup', passport.authenticate('local-signup', {
+router.post('/signup', csrfProtection, passport.authenticate('local-signup', {
     successRedirect : '/main', // redirect to the secure profile section
     failureRedirect : '/signup', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
