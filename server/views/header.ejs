@@ -15,20 +15,25 @@
 
         <ul class="nav navbar-nav navbar-left">
             <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developing Info <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#"><strong>Id</strong>: <%= id %></a></li>
-              <li><a href="#"><strong>Cookie</strong>: <%= sess %></a></li>
-              <li><a href="#"><strong>CSRF Token</strong>: <%= csrfToken %></a></li>
-            </ul>
-          </li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developing Info <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#"><strong>Id</strong>: <%= id %></a></li>
+                <li><a href="#"><strong>Cookie</strong>: <%= sess %></a></li>
+                <li><a href="#"><strong>CSRF Token</strong>: <%= csrfToken %></a></li>
+              </ul>
+            </li>
 
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/main">main</a></li>
-          <li><a href="#"><%= email %></a></li>
-          <li><a href="/logout">logout</a></li>
+            <li><a href="/main">main</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= email %> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/logout">logout</a></li>
+              </ul>
+            </li>
+
         </ul>
 
       </div>
