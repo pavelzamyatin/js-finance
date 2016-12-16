@@ -11,7 +11,8 @@
         <div class="panel-body">
 
           <form id="new-entry-form" class="form-horizontal" data-toggle="validator">
-            <fieldset>
+            <!-- CSRF check -->
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <!-- <legend>Legend</legend> -->
 
             <!-- Date input -->

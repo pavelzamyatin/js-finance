@@ -29,16 +29,16 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
   }
 });
 
+// *** tell express that we want to use EJS view engine *** //
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 // *** required for passport *** ///
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(session({ secret: 'ilovemoney' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-
-// *** tell express that we want to use EJS view engine *** //
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 // *** config middleware *** //
 app.use(bodyParser.json());

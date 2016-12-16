@@ -1,6 +1,10 @@
-var express     = require('express');
-var router      = require('../routes/api');
-var passport    = require('../config/passport');
+var express         = require('express');
+var router          = require('../routes/api');
+var passport        = require('../config/passport');
+
+// *** protect from CSRF *** ///
+var csrf            = require('csurf');
+var csrfProtection  = csrf({ cookie: true })
 
 // =========================================================================
 // BASIC ROUTE =============================================================
@@ -11,12 +15,13 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/main', isLoggedIn, function(req, res, next) {
+router.get('/main', isLoggedIn, csrfProtection, function(req, res, next) {
   res.render('main', {
     title : 'Main page',
     id    : req.user._id.toString().slice(-5),
     email : req.user.local.email,
-    sess  : req.cookies['connect.sid'].toString().slice(-5)
+    sess  : req.cookies['connect.sid'].toString().slice(-5),
+    csrfToken: req.csrfToken()
   });
 });
 
@@ -24,15 +29,16 @@ router.get('/main', isLoggedIn, function(req, res, next) {
 // LOGIN ROUTES ============================================================
 // =========================================================================
 
-router.get('/login', function(req, res) {
+router.get('/login', csrfProtection, function(req, res) {
   res.render('login', {
-    title: 'Login page',
-    message: req.flash('loginMessage')
+    title     : 'Login page',
+    message   : req.flash('loginMessage'),
+    csrfToken : req.csrfToken()
   });
 });
 
 // process the login form
-router.post('/login', passport.authenticate('local-login', {
+router.post('/login', csrfProtection, passport.authenticate('local-login', {
     successRedirect : '/main', // redirect to the secure profile section
     failureRedirect : '/login', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages

@@ -3,6 +3,10 @@ var router      = express.Router();
 var validator   = require('validator');
 var Entry       = require('../models/entry');
 
+// *** protect from CSRF *** ///
+var csrf            = require('csurf');
+var csrfProtection  = csrf({ cookie: true })
+
 // =========================================================================
 // API ROUTES =============================================================
 // =========================================================================
@@ -46,7 +50,7 @@ router.get('/api/entry/:id', function findEntryById(req, res) {
 });
 
 // *** post Entry *** //
-router.post('/api/entries', function addEntry(req, res) {
+router.post('/api/entries', csrfProtection, function addEntry(req, res) {
 
   var newEntry = new Entry({
     user      : req.body.user,

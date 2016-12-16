@@ -13,13 +13,14 @@ $(document).ready(function() {
         $.ajax({
           type: 'POST',
           url: '/api/entries',
+          headers: {"X-CSRF-Token": formData[0].value },
           dataType: "json",
           data: {
             user      : 'form',
-            date      : formData[0].value,
-            sum       : formData[1].value,
-            category  : formData[2].value,
-            comment   : formData[3].value
+            date      : formData[1].value,
+            sum       : formData[2].value,
+            category  : formData[3].value,
+            comment   : formData[4].value
           },
           success: function(data) {
             myNotify('New entry posted successfuly!', 'success');
