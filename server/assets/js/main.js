@@ -7,7 +7,7 @@ $(document).ready(function() {
     // console.log(formData);
     if (e.isDefaultPrevented()) {
         // handle the invalid form...
-        myNotify('Check the form, please!', 'danger');
+        myNotify(`Form is not completed OR you made some mistake!`, 'danger');
       } else {
         // everything looks good!
         $.ajax({
@@ -28,7 +28,7 @@ $(document).ready(function() {
             console.log(data);
           },
           error: function(err) {
-            myNotify('Problem accured during post process, please see console log', 'danger');
+            myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
             console.log(err);
           }
         });
@@ -49,7 +49,7 @@ $(document).ready(function() {
         showTable(data)
       },
       error: function(err){
-        myNotify('Problem accured during operation, please see console log', 'danger');
+        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
@@ -97,7 +97,7 @@ $(document).ready(function() {
         showTable(data);
       },
       error: function(err) {
-        myNotify('Problem accured during operation, please see console log', 'danger');
+        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
@@ -114,7 +114,7 @@ $(document).ready(function() {
         showALLEntries();
       },
       error: function(err) {
-        myNotify('Problem accured during operation, please see console log', 'danger');
+        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
@@ -141,7 +141,7 @@ $(document).ready(function() {
         console.log(data);
       },
       error: function(err) {
-        myNotify('Problem accured during operation, please see console log', 'danger');
+        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
