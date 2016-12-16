@@ -13,7 +13,7 @@ $(document).ready(function() {
         $.ajax({
           type: 'POST',
           url: '/api/entries',
-          headers: {"X-CSRF-Token": formData[0].value },
+          headers: { "X-CSRF-Token": $('input[type="hidden"]')[0].value },
           dataType: "json",
           data: {
             user      : 'form',
@@ -126,6 +126,7 @@ $(document).ready(function() {
     $.ajax({
       type: 'POST',
       url: '/api/entries',
+      headers: { "X-CSRF-Token": $('input[type="hidden"]')[0].value },
       dataType: "json",
       data: {
         user      : "ajax",
