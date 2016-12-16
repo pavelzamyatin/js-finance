@@ -31,7 +31,7 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
 
 // *** required for passport *** ///
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(session({ secret: 'ilovefinance' })); // session secret
+app.use(session({ secret: 'ilovemoney' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

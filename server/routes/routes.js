@@ -11,14 +11,18 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/main', isLoggedIn, function(req, res, next) {
+  res.render('main', {
+    title : 'Main page',
+    id    : req.user._id.toString().slice(-5),
+    email : req.user.local.email,
+    sess  : req.cookies['connect.sid'].toString().slice(-5)
+  });
+});
+
 // =========================================================================
 // LOGIN ROUTES ============================================================
 // =========================================================================
-router.get('/auth', function(req, res, next) {
-  res.render('auth', {
-    title: 'Auth page'
-  });
-});
 
 router.get('/login', function(req, res) {
   res.render('login', {
@@ -29,7 +33,7 @@ router.get('/login', function(req, res) {
 
 // process the login form
 router.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/profile', // redirect to the secure profile section
+    successRedirect : '/main', // redirect to the secure profile section
     failureRedirect : '/login', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }));
@@ -46,7 +50,7 @@ router.get('/signup', function(req, res) {
 
 // process the signup form
 router.post('/signup', passport.authenticate('local-signup', {
-    successRedirect : '/profile', // redirect to the secure profile section
+    successRedirect : '/main', // redirect to the secure profile section
     failureRedirect : '/signup', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }));
