@@ -10,7 +10,7 @@
       <div id="collapse1" class="panel-collapse collapse in">
         <div class="panel-body">
 
-          <form class="form-horizontal" data-toggle="validator">
+          <form id="new-entry-form" class="form-horizontal" data-toggle="validator">
             <fieldset>
             <!-- <legend>Legend</legend> -->
 
@@ -37,8 +37,9 @@
               <div class="col-lg-10">
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <input class="form-control" id="inputSum" name="inputSum" placeholder="money" type="number" required/>
+                  <input class="form-control" id="inputSum" name="inputSum" placeholder="money" type="number" data-error="It should be a number, bro!" required/>
                 </div>
+                <div class="help-block with-errors"></div>
               </div>
             </div>
 

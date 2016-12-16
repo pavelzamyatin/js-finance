@@ -1,18 +1,24 @@
 // *** main dependencies *** //
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var http = require('http');
-var mongoose = require('mongoose');
+var express       = require('express');
+var path          = require('path');
+var bodyParser    = require('body-parser');
+var http          = require('http');
+var mongoose      = require('mongoose');
+var flash         = require('connect-flash');
+
+// *** auth dependencies *** //
+var passport      = require('passport');
+var cookieParser  = require('cookie-parser');
+var session       = require('express-session');
 
 // *** routes *** //
-var routes = require('./routes/routes.js');
+var routes        = require('./routes/routes.js');
 
 // *** config file *** //
-var config = require('./_config');
+var config        = require('./config/config');
 
 // *** express instance *** //
-var app = express();
+var app           = express();
 
 // *** mongoose *** ///
 mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
@@ -23,7 +29,14 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
   }
 });
 
-// tell express that we want to use EJS view engine
+// *** required for passport *** ///
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(session({ secret: 'ilovefinance' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+// *** tell express that we want to use EJS view engine *** //
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

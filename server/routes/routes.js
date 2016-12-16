@@ -1,125 +1,73 @@
-var express = require('express');
-var router = express.Router();
-var Entry = require('../models/entry');
-var validator = require('validator');
+var express     = require('express');
+var router      = require('../routes/api');
+var passport    = require('../config/passport');
 
-// BASIC ROUTE
+// =========================================================================
+// BASIC ROUTE =============================================================
+// =========================================================================
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Index page'
   });
 });
 
-// *** get ALL Entries *** //
-router.get('/api/entries', function findAllEntries(req, res) {
-  Entry.find({}, function(err, entries) {
-    if(err) {
-      res.json({
-          "STATUS": "ERROR",
-          "ERROR": err,
-          "ITEMS": []
-      });
-    } else {
-      res.json({
-          "STATUS": "SUCCESS",
-          "ERROR": "",
-          "ITEMS": entries
-      });
-    }
+// =========================================================================
+// LOGIN ROUTES ============================================================
+// =========================================================================
+router.get('/auth', function(req, res, next) {
+  res.render('auth', {
+    title: 'Auth page'
   });
 });
 
-// *** get SINGLE Entries *** //
-router.get('/api/entry/:id', function findEntryById(req, res) {
-  Entry.findById(req.params.id, function(err, entry) {
-    if(err) {
-      res.json({
-          "STATUS": "ERROR",
-          "ERROR": err,
-          "ITEMS": []
-      });
-    } else {
-      res.json({
-          "STATUS": "SUCCESS",
-          "ERROR": "",
-          "ITEMS": [entry]
-      });
-    }
+router.get('/login', function(req, res) {
+  res.render('login', {
+    title: 'Login page',
+    message: req.flash('loginMessage')
   });
 });
 
-// *** post Entry *** //
-router.post('/api/entries', function addEntry(req, res) {
+// process the login form
+router.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/profile', // redirect to the secure profile section
+    failureRedirect : '/login', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
 
-  var newEntry = new Entry({
-    user      : req.body.user,
-    date      : validator.toDate(req.body.date),
-    sum       : validator.toFloat(req.body.sum.toString()),
-    category  : validator.escape(req.body.category),
-    comment   : validator.escape(req.body.comment)
-  });
-
-  newEntry.save(function(err) {
-    if (err) {
-      res.json({
-          "STATUS": "ERROR",
-          "ERROR": err,
-          "ITEMS": []
-      });
-    } else {
-      res.json({
-          "STATUS": "SUCCESS",
-          "ERROR": "",
-          "ITEMS": [newEntry]
-      });
-    }
-  });
-});
-
-// *** put SINGLE Entry *** //
-router.put('/api/entry/:id', function updateEntry(req, res) {
-  Entry.findById(req.params.id, function(err, entry) {
-
-    if (req.body.date) { entry.date = validator.toDate(req.body.date); }
-    if (req.body.sum) { entry.sum = validator.toFloat(req.body.sum.toString()); }
-    if (req.body.category) { entry.category = validator.escape(req.body.category); }
-    if (req.body.comment) { entry.comment = validator.escape(req.body.comment); }
-
-    entry.save(function(err) {
-      if (err) {
-        res.json({
-            "STATUS": "ERROR",
-            "ERROR": err,
-            "ITEMS": []
-        });
-      } else {
-        res.json({
-            "STATUS": "SUCCESS",
-            "ERROR": "",
-            "ITEMS": [entry]
-        });
-      }
+// =========================================================================
+// SIGNUP ROUTES ===========================================================
+// =========================================================================
+router.get('/signup', function(req, res) {
+    res.render('signup.ejs', {
+      title: 'Signup page',
+      message: req.flash('signupMessage')
     });
-  });
 });
 
-// *** delete single Entry *** //
-router.delete('/api/entry/:id', function deleteEntry(req, res) {
-  Entry.findByIdAndRemove(req.params.id, function (err, entry) {
-    if (err) {
-      res.json({
-          "STATUS": "ERROR",
-          "ERROR": err,
-          "ITEMS": []
-      });
-    } else {
-      res.json({
-          "STATUS": "SUCCESS",
-          "ERROR": "",
-          "ITEMS": [entry]
-      });
-    }
-  });
+// process the signup form
+router.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/profile', // redirect to the secure profile section
+    failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}));
+
+// =====================================
+// LOGOUT ==============================
+// =====================================
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
 });
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
 
 module.exports = router;

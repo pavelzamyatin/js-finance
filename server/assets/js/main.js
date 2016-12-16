@@ -1,8 +1,8 @@
 $(document).ready(function() {
   console.log('main.js is ready');
 
-  // POST FROM form
-  $('form').validator().on('submit', function(e) {
+  // POST FROM new-entry-form
+  $('#new-entry-form').validator().on('submit', function(e) {
     var formData = $('form').serializeArray();
     // console.log(formData);
     if (e.isDefaultPrevented()) {

@@ -13,7 +13,13 @@
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "mongoose": "^4.7.0",
-    "validator": "^6.2.0"
+    "validator": "^6.2.0",
+    "passport" : "^0.1.17",
+    "passport-local" : "^0.1.6",
+    "connect-flash" : "^0.1.1",
+    "cookie-parser": "^1.0.0",
+    "express-session": "^1.0.0",
+    "bcrypt-nodejs" : "latest"
   },
   "devDependencies": {
     "chai": "^3.5.0",
