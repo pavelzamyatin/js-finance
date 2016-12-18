@@ -1,5 +1,6 @@
 var express         = require('express');
 var router          = require('../routes/api');
+var config          = require('../config/config');
 var passport        = require('../config/passport');
 
 // *** protect from CSRF *** ///
@@ -18,6 +19,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/main', isLoggedIn, csrfProtection, function(req, res, next) {
   res.render('main', {
+    sitename  : config.siteName,
     title     : 'Main page',
     id        : req.user._id,
     email     : req.user.local.email,
