@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./server/app NODE_ENV=development",
+    "start": "node ./server/app",
     "test": "mocha test/test.js --reporter mochawesome"
   },
   "dependencies": {
