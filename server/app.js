@@ -1,5 +1,3 @@
-process.env.NODE_ENV = 'mlab';
-
 // *** main dependencies *** //
 var express       = require('express');
 var path          = require('path');
