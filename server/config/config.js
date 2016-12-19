@@ -6,8 +6,8 @@ config.siteName     = 'zamyatin.xyz';
 
 // DB config
 config.mongoURI     = {
-  development: 'mongodb://localhost:27017/finance',
-  test: 'mongodb://localhost:27017/finance-test'
+  development : 'mongodb://localhost:27017/finance',
+  test        : 'mongodb://localhost:27017/finance-test'
 };
 
 module.exports = config;
