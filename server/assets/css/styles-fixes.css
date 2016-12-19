@@ -1,0 +1,4 @@
+/* fixed margin between elements in table block */
+.col-xs-12 {
+  margin-top: 5px;
+}
