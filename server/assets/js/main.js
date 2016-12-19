@@ -49,7 +49,7 @@ $(document).ready(function() {
         showTable(data)
       },
       error: function(err){
-        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
+        myNotify(`${err.status} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
@@ -97,7 +97,7 @@ $(document).ready(function() {
         showTable(data);
       },
       error: function(err) {
-        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
+        myNotify(`${err.status} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
@@ -114,7 +114,7 @@ $(document).ready(function() {
         showALLEntries();
       },
       error: function(err) {
-        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
+        myNotify(`${err.status} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
@@ -141,7 +141,7 @@ $(document).ready(function() {
         console.log(data);
       },
       error: function(err) {
-        myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
+        myNotify(`${err.status} - ${err.statusText}`, 'danger');
         console.log(err);
       }
     });
