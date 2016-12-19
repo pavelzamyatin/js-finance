@@ -28,11 +28,6 @@ router.get('/main', isLoggedIn, csrfProtection, function(req, res, next) {
   });
 });
 
-// 404 request
-router.get('*', function(req, res, next) {
-  res.status(404).render('404', { title: "404 page" });
-});
-
 // =========================================================================
 // LOGIN ROUTES ============================================================
 // =========================================================================
@@ -76,6 +71,11 @@ router.post('/signup', csrfProtection, passport.authenticate('local-signup', {
 router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
+});
+
+// 404 request
+router.get('*', function(req, res, next) {
+  res.status(404).render('404', { title: "404 page" });
 });
 
 // route middleware to make sure a user is logged in
