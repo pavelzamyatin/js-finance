@@ -5,8 +5,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development node ./server/app",
-    "test": "NODE_ENV=test mocha test/test.js --reporter mochawesome"
+    "start": "node ./server/app",
+    "test": "mocha test/test.js --reporter mochawesome"
   },
   "dependencies": {
     "bcrypt-nodejs": "latest",
