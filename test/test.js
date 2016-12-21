@@ -1,12 +1,16 @@
 process.env.NODE_ENV = 'test';
 
+// main dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var mongoose = require("mongoose");
-
 var server = require('../server/app');
 var Entry = require("../server/models/entry");
 
+// csrf dependency
+var cheerio = require('cheerio');
+
+// test environment
 var should = chai.should();
 chai.use(chaiHttp);
 
@@ -37,7 +41,6 @@ describe('API Tests: ', function() {
       category  : ["shop", "cafe"],
       comment   : "New nice entry specially for testing reasons"
     });
-
     newEntry.save(function(err) {
       done();
     });
@@ -114,39 +117,50 @@ describe('API Tests: ', function() {
 
   it('should post a new entry on /api/entries POST', function(done) {
     chai.request(server)
-      .post('/api/entries')
-      .send({
-        user      : "test",
-        date      : new Date(),
-        sum       : 99.99,
-        category  : "Home",
-        comment   : "POST request simple test"
-      })
+      .get('/login')
       .end(function(err, res) {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('Object');
+        // finding csrf token in login form
+        var $ = cheerio.load(res.text);
+        var csrf = $('input[name="_csrf"]').val();
 
-        res.body.should.have.property('STATUS');
-        res.body.should.have.property('ERROR');
-        res.body.should.have.property('ITEMS');
+        // post request
+        chai.request(server)
+          .post('/api/entries')
+          .set('cookie', res.headers['set-cookie'])
+          .send({
+            _csrf     : csrf,
+            user      : "test",
+            date      : new Date(),
+            sum       : 99.99,
+            category  : "Home",
+            comment   : "POST request simple test"
+          })
+          .end(function(err, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.be.a('Object');
 
-        res.body.STATUS.should.equal('SUCCESS');
-        res.body.ERROR.should.equal('');
-        res.body.ITEMS.should.be.a('Array');
+            res.body.should.have.property('STATUS');
+            res.body.should.have.property('ERROR');
+            res.body.should.have.property('ITEMS');
 
-        res.body.ITEMS[0].should.have.property('_id');
-        res.body.ITEMS[0].should.have.property('user');
-        res.body.ITEMS[0].should.have.property('date');
-        res.body.ITEMS[0].should.have.property('sum');
-        res.body.ITEMS[0].should.have.property('category');
-        res.body.ITEMS[0].should.have.property('comment');
+            res.body.STATUS.should.equal('SUCCESS');
+            res.body.ERROR.should.equal('');
+            res.body.ITEMS.should.be.a('Array');
 
-        res.body.ITEMS[0].user.should.equal('test');
-        res.body.ITEMS[0].sum.should.equal(99.99);
-        res.body.ITEMS[0].comment.should.equal('POST request simple test');
+            res.body.ITEMS[0].should.have.property('_id');
+            res.body.ITEMS[0].should.have.property('user');
+            res.body.ITEMS[0].should.have.property('date');
+            res.body.ITEMS[0].should.have.property('sum');
+            res.body.ITEMS[0].should.have.property('category');
+            res.body.ITEMS[0].should.have.property('comment');
 
-        done();
+            res.body.ITEMS[0].user.should.equal('test');
+            res.body.ITEMS[0].sum.should.equal(99.99);
+            res.body.ITEMS[0].comment.should.equal('POST request simple test');
+
+            done();
+          });
       });
   });
 
