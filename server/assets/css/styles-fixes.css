@@ -1,4 +1,10 @@
 /* fixed margin between elements in table block */
-.col-xs-12 {
+.table-buttons {
   margin-top: 5px;
+}
+
+#avatar {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
