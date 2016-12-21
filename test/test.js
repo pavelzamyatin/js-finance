@@ -1,14 +1,16 @@
 process.env.NODE_ENV = 'test';
 
+// main dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var mongoose = require("mongoose");
-
 var server = require('../server/app');
 var Entry = require("../server/models/entry");
 
+// csrf dependency
 var cheerio = require('cheerio');
 
+// test env
 var should = chai.should();
 chai.use(chaiHttp);
 
@@ -120,6 +122,8 @@ describe('API Tests: ', function() {
         // finding csrf token in login form
         var $ = cheerio.load(res.text);
         var csrf = $('input[name="_csrf"]').val();
+
+        // post request
         chai.request(server)
           .post('/api/entries')
           .set('cookie', res.headers['set-cookie'])
