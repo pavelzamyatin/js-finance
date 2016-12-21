@@ -10,7 +10,7 @@ var Entry = require("../server/models/entry");
 // csrf dependency
 var cheerio = require('cheerio');
 
-// test env
+// test environment
 var should = chai.should();
 chai.use(chaiHttp);
 
