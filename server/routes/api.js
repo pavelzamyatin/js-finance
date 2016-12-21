@@ -12,7 +12,7 @@ var csrfProtection  = csrf({ cookie: true })
 // =========================================================================
 
 // *** get ALL Entries *** //
-router.get('/api/entries', function findAllEntries(req, res) {
+router.get('/api/entries', function(req, res) {
   Entry.find({}, function(err, entries) {
     if(err) {
       res.json({
@@ -31,7 +31,7 @@ router.get('/api/entries', function findAllEntries(req, res) {
 });
 
 // *** get SINGLE Entries *** //
-router.get('/api/entry/:id', function findEntryById(req, res) {
+router.get('/api/entry/:id', function(req, res) {
   Entry.findById(req.params.id, function(err, entry) {
     if(err) {
       res.json({
@@ -50,7 +50,7 @@ router.get('/api/entry/:id', function findEntryById(req, res) {
 });
 
 // *** post Entry *** //
-router.post('/api/entries', csrfProtection, function addEntry(req, res) {
+router.post('/api/entries', csrfProtection, function(req, res) {
 
   var newEntry = new Entry({
     user      : req.body.user,
@@ -78,7 +78,7 @@ router.post('/api/entries', csrfProtection, function addEntry(req, res) {
 });
 
 // *** put SINGLE Entry *** //
-router.put('/api/entry/:id', function updateEntry(req, res) {
+router.put('/api/entry/:id', function(req, res) {
   Entry.findById(req.params.id, function(err, entry) {
 
     if (req.body.date) { entry.date = validator.toDate(req.body.date); }
@@ -105,7 +105,7 @@ router.put('/api/entry/:id', function updateEntry(req, res) {
 });
 
 // *** delete single Entry *** //
-router.delete('/api/entry/:id', function deleteEntry(req, res) {
+router.delete('/api/entry/:id', function(req, res) {
   Entry.findByIdAndRemove(req.params.id, function (err, entry) {
     if (err) {
       res.json({
