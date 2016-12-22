@@ -5,6 +5,7 @@ var bodyParser    = require('body-parser');
 var http          = require('http');
 var mongoose      = require('mongoose');
 var flash         = require('connect-flash');
+var favicon       = require('serve-favicon');
 
 // *** auth dependencies *** //
 var passport      = require('passport');
@@ -44,6 +45,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'assets')));
+app.use(favicon(path.join(__dirname, 'assets', 'img/favicon.png')));
 
 // *** main routes *** //
 app.use('/', routes);
