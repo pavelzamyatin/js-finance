@@ -1,7 +1,43 @@
 $(document).ready(function() {
   console.log('main.js is ready');
 
-  // POST FROM new-entry-form
+  // =======================================
+  // ========== HELP METHODS ZONE ==========
+  // =======================================
+
+  // This function helps to use Bootstrap Notify
+  var myNotify = function(message, type) {
+    $.notify({message}, {type, placement: {from: 'bottom'}});
+  };
+
+  // This function helps to show data in the table from the API GET request
+  var showTable = function(res) {
+    console.log(res);
+    var newHTML = '';
+    if (res.ITEMS.length == 0) {
+        newHTML = [];
+        myNotify(`No entries was found. Try another request.`, 'warning');
+    } else {
+        newHTML = $.map(res.ITEMS, function(value) {
+          return (`
+            <tr>
+              <td>${value._id}</td>
+              <td>${value.user.toString().slice(-5)}</td>
+              <td>${value.sum}</td>
+              <td>${value.category}</td>
+              <td>${value.date}</td>
+              <td>${value.comment}</td>
+            </tr>
+            `);
+        });
+    }
+    $("#main-table").html(newHTML.join(""));
+  };
+
+  // =======================================
+  // ============ NEW ENTRY ZONE ===========
+  // =======================================
+
   $('#new-entry-form').validator().on('submit', function(e) {
     var formData = $('form').serializeArray();
     // console.log(formData);
@@ -37,10 +73,10 @@ $(document).ready(function() {
   });
 
   // =======================================
-  // ============== TEST ZONE ==============
+  // ========== API REQUESTS ZONE ==========
   // =======================================
 
-  // SHOW ALL ENTRIES
+  // AJAX GET ALL ENTRIES request
   var showALLEntries = function() {
     $.ajax({
       type: 'GET',
@@ -55,38 +91,37 @@ $(document).ready(function() {
     });
   };
 
-  // This function helps to show data in the table from the API GET request
-  var showTable = function(res) {
-    console.log(res);
-    var newHTML = $.map(res.ITEMS, function(value) {
-      return (`
-        <tr>
-          <td>${value._id}</td>
-          <td>${value.user.toString().slice(-5)}</td>
-          <td>${value.sum}</td>
-          <td>${value.category}</td>
-          <td>${value.date}</td>
-          <td>${value.comment}</td>
-        </tr>
-        `);
-    });
-    $("#main-table").html(newHTML.join(""));
-  };
+  // =======================================
+  // ============= MAIN ZONE ===============
+  // =======================================
 
-  // This function helps to help notification using Bootstrap Notify
-  var myNotify = function(message, type) {
-    $.notify({
-      message: message
-    }, {
-      type: type,
-      placement: {
-        from: 'bottom'
+  // SHOW ALL ENTRIES BUTTON
+  $('#show-all-button').click(function() {
+
+    var filter = null;
+    if ($('#category-selector')[0].value != 'All entries') {
+      filter = $('#category-selector')[0].value;
+    }
+
+    $.ajax({
+      type  : 'GET',
+      url   : '/api/entries/',
+      data  : { category: filter },
+      success: function(data) {
+        showTable(data);
+      },
+      error: function(err) {
+        myNotify(`${err.status} - ${err.statusText}`, 'danger');
+        console.log(err);
       }
     });
-  };
+  });
 
-  // GET all entries
-  $('#show-all-button').click(showALLEntries);
+  //
+  $('#category-reset-button').click(function() {
+    $('#category-selector')[0].value = 'All entries';
+    showALLEntries();
+  });
 
   // GET entry by ID
   $('#show-id-button').click(function() {
@@ -122,7 +157,6 @@ $(document).ready(function() {
 
   // POST NEW ENTRY BUTTON TEST
   $('#post-entry-button').click(function() {
-
     $.ajax({
       type: 'POST',
       url: '/api/entries',
@@ -132,7 +166,7 @@ $(document).ready(function() {
         user      : $('input[name="_userID"]')[0].value,
         date      : new Date(),
         sum       : 88.88,
-        category  : "category string",
+        category  : "Home",
         comment   : "POST request from AJAX"
       },
       success: function(data) {
