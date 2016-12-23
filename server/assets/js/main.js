@@ -19,36 +19,26 @@ $(document).ready(function() {
         myNotify(`No entries was found. Try another request.`, 'warning');
     } else {
         newHTML = $.map(res.ITEMS, function(value) {
-        //   return `
-        //     <tr>
-        //       <td>${value._id}</td>
-        //       <td>${value.user.toString().slice(-5)}</td>
-        //       <td>${value.sum}</td>
-        //       <td>${value.category}</td>
-        //       <td>${moment(value.date).format('L')}</td>
-        //       <td>${value.comment}</td>
-        //     </tr>
-        //     `;
-        return `
-        <a href="" class="list-group-item list-items" id="${value._id}">
-            <div class="list-group-item-text">
-                <div class="row">
-                    <div class="col-md-2">
-                        <p class="list-group-item-text">
-                            <span class="entry-sum">${value.sum}</span>
-                            <span class="entry-currency">NZ</span>
-                    </div>
-                    <div class="col-md-10">
-                        <p class="list-group-item-text">
-                            <p class="text-muted">DATE: ${moment(value.date).format('L')}
-                            <span class="label label-info entry-category-label">${value.category}</span></p>
-                        </p>
-                        <p class="list-group-item-text">${value.comment}</p>
+            return `
+            <a href="" class="list-group-item entries-list animated fadeInUp" id="${value._id}">
+                <div class="list-group-item-text">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p class="list-group-item-text">
+                                <span class="entry-sum">${value.sum}</span>
+                                <span class="entry-currency">NZ</span>
+                        </div>
+                        <div class="col-md-10">
+                            <p class="list-group-item-text">
+                                <p class="text-muted">DATE: ${moment(value.date).format('L')}
+                                <span class="label label-info entry-category-label">${value.category}</span></p>
+                            </p>
+                            <p class="list-group-item-text">${value.comment}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </a>
-        `;
+            </a>
+            `;
         });
     }
     $("#main-table").html(newHTML.join(""));
@@ -142,8 +132,8 @@ $(document).ready(function() {
   });
 
   // COPY ELEMENT ID TO THE EDIT FORM
-  $(document).on('click', '.list-items', function() {
-      console.log($(this));
+  $(document).on('click', '.entries-list', function() {
+    //   console.log($(this));
       $('#inputId')[0].value = $(this)[0].id;
       return false;
   });
