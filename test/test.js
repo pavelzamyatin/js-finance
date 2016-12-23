@@ -30,8 +30,10 @@ describe('General Tests: ', function() {
 
 describe('API Tests: ', function() {
 
-  // drop TEST collection
-  Entry.collection.drop();
+  // drop finance-test collection
+  var dropModel = function(model){
+    mongoose.connection.collections[model].drop(function(err) {});
+  }
 
   beforeEach(function(done){
     var newEntry = new Entry({
@@ -47,7 +49,7 @@ describe('API Tests: ', function() {
   });
 
   afterEach(function(done){
-    Entry.collection.drop();
+    dropModel('entries');
     done();
   });
 
