@@ -11,23 +11,32 @@ var csrfProtection  = csrf({ cookie: true })
 // API ROUTES =============================================================
 // =========================================================================
 
-// *** get ALL Entries *** //
+// *** get ALL Entries plus FILTERED Entries ***
 router.get('/api/entries', function(req, res) {
-  Entry.find({}, function(err, entries) {
-    if(err) {
-      res.json({
-          "STATUS": "ERROR",
-          "ERROR": err,
-          "ITEMS": []
-      });
-    } else {
-      res.json({
-          "STATUS": "SUCCESS",
-          "ERROR": "",
-          "ITEMS": entries
-      });
-    }
-  });
+  // create new instance of Entry model
+  var newEntry = Entry.find({})
+
+  // checking filters
+  if(req.query.category) {
+    newEntry.where('category').equals(req.query.category);
+  }
+
+  // response generator
+  newEntry.exec(function(err, entries) {
+      if(err) {
+        res.json({
+            "STATUS": "ERROR",
+            "ERROR": err,
+            "ITEMS": []
+        });
+      } else {
+        res.json({
+            "STATUS": "SUCCESS",
+            "ERROR": "",
+            "ITEMS": entries
+        });
+      }
+    });
 });
 
 // *** get SINGLE Entries *** //

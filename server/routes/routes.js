@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 router.get('/main', isLoggedIn, csrfProtection, function(req, res, next) {
   res.render('main', {
     sitename  : config.siteName,
-    title     : 'Main page',
+    title     : config.siteName,
     id        : req.user._id,
     email     : req.user.local.email,
     sess      : req.cookies['connect.sid'],
