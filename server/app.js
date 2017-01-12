@@ -34,7 +34,7 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// *** required for passport *** ///
+// *** required for passport *** //
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(session({ secret: 'ilovemoney' })); // session secret
 app.use(passport.initialize());
