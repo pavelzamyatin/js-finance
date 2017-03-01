@@ -1,15 +1,17 @@
 // dependencies
-var parse   = require('csv-parse');
 var fs      = require('fs');
 var bb      = require('bluebird');
+var parse   = require('csv-parse');
+var utf8    = require('utf8');
+var w1251   = require('windows-1251');
 
 // config
-var FILENAME = 'data/operations-utf8.csv';
+var FILENAME = 'data/operations.csv';
 
 // add bluebird promises for all fs methods
 bb.promisifyAll(fs);
 
-fs.readFileAsync(FILENAME, 'utf-8')
+fs.readFileAsync(FILENAME, 'UTF-8')
 .then(data => {
     return new Promise((resolve, reject) => {
         parse(data, {delimiter: ';'}, function(err, csv) {
@@ -20,5 +22,7 @@ fs.readFileAsync(FILENAME, 'utf-8')
         });
     })
 }).then(data => {
-    console.log(data[0][8]);
+    var xui = utf8.encode(data[0][8]);
+    var xren = w1251.decode(xui);
+    console.log(xren);
 })
