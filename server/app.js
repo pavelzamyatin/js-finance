@@ -23,11 +23,11 @@ var app           = express();
 
 // *** mongoose *** ///
 mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
-  if(err) {
-    console.log('Error connecting to the database. ' + err);
-  } else {
-    console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
-  }
+    if(err) {
+      console.log('Error connecting to the database. ' + err);
+    } else {
+      console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+    }
 });
 
 // *** tell express that we want to use EJS view engine *** //
@@ -36,7 +36,12 @@ app.set('view engine', 'ejs');
 
 // *** required for passport *** //
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(session({ secret: 'ilovemoney' })); // session secret
+app.use(session({
+        secret: 'ilovemoney',
+        resave: true,
+        saveUninitialized: true
+}));
+  
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -53,7 +58,7 @@ app.use('/', routes);
 // *** server config *** //
 var server   = http.createServer(app);
 server.listen(config.portNumber, function() {
-  console.log(`Node server running on http://localhost:${config.portNumber}`);
+    console.log(`Node server running on http://localhost:${config.portNumber}`);
 });
 
 module.exports = app;
