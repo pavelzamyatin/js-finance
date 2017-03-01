@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   // This function helps to use Bootstrap Notify
   var myNotify = function(message, type) {
-    $.notify({message}, {type, placement: {from: 'bottom'}});
+      $.notify({message}, {type, placement: {from: 'bottom'}});
   };
 
   // This function helps to show data in the table from the API GET request
@@ -48,35 +48,35 @@ $(document).ready(function() {
   // ============ NEW ENTRY ZONE ===========
   // =======================================
 
-  $('#new-entry-form').validator().on('submit', function(e) {
+  $('#main-form').validator().on('submit', function(e) {
     var formData = $('form').serializeArray();
     // console.log(formData);
     if (e.isDefaultPrevented()) {
         // handle the invalid form...
         myNotify(`Form is not completed OR you made some mistake!`, 'danger');
-      } else {
+        } else {
         // everything looks good!
         $.ajax({
-          type: 'POST',
-          url: '/api/entries',
-          headers: { "X-CSRF-Token": $('input[name="_csrf"]')[0].value },
-          dataType: "json",
-          data: {
-            user      : $('input[name="_userID"]')[0].value,
-            date      : formData[2].value,
-            sum       : formData[3].value,
-            category  : formData[4].value,
-            comment   : formData[5].value
-          },
-          success: function(data) {
-            myNotify('New entry posted successfuly!', 'success');
-            showALLEntries();
-            console.log(data);
-          },
-          error: function(err) {
-            myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
-            console.log(err);
-          }
+            type: 'POST',
+            url: '/api/entries',
+            headers: { "X-CSRF-Token": $('input[name="_csrf"]')[0].value },
+            dataType: "json",
+            data: {
+                user      : $('input[name="_userID"]')[0].value,
+                date      : formData[2].value,
+                sum       : formData[3].value,
+                category  : formData[4].value,
+                comment   : formData[5].value
+            },
+            success: function(data) {
+                myNotify('New entry posted successfuly!', 'success');
+                showALLEntries();
+                console.log(data);
+            },
+            error: function(err) {
+                myNotify(`${err.responseText} - ${err.statusText}`, 'danger');
+                console.log(err);
+            }
         });
         e.preventDefault();
       }
@@ -88,17 +88,17 @@ $(document).ready(function() {
 
   // AJAX GET ALL ENTRIES request
   var showALLEntries = function() {
-    $.ajax({
-      type: 'GET',
-      url: '/api/entries',
-      success: function(data) {
-        showTable(data)
-      },
-      error: function(err){
-        myNotify(`${err.status} - ${err.statusText}`, 'danger');
-        console.log(err);
-      }
-    });
+      $.ajax({
+          type: 'GET',
+          url: '/api/entries',
+          success: function(data) {
+              showTable(data)
+          },
+          error: function(err){
+              myNotify(`${err.status} - ${err.statusText}`, 'danger');
+              console.log(err);
+          }
+      });
   };
 
   // =======================================
@@ -107,93 +107,92 @@ $(document).ready(function() {
 
   // SHOW ALL ENTRIES BUTTON
   $('#show-all-button').click(function() {
-    var filter = null;
-    if ($('#category-selector')[0].value != 'All entries') {
-      filter = $('#category-selector')[0].value;
-    }
-    $.ajax({
-      type  : 'GET',
-      url   : '/api/entries/',
-      data  : { category: filter },
-      success: function(data) {
-        showTable(data);
-      },
-      error: function(err) {
-        myNotify(`${err.status} - ${err.statusText}`, 'danger');
-        console.log(err);
+      var filter = null;
+      if ($('#category-selector')[0].value != 'All entries') {
+          filter = $('#category-selector')[0].value;
       }
-    });
+      $.ajax({
+          type  : 'GET',
+          url   : '/api/entries/',
+          data  : { category: filter },
+          success: function(data) {
+              showTable(data);
+          },
+          error: function(err) {
+              myNotify(`${err.status} - ${err.statusText}`, 'danger');
+              console.log(err);
+          }
+      });
   });
 
   // RESET CATEGODY BUTTON
   $('#category-reset-button').click(function() {
-    $('#category-selector')[0].value = 'All entries';
-    showALLEntries();
+      $('#category-selector')[0].value = 'All entries';
+      showALLEntries();
   });
 
   // COPY ELEMENT ID TO THE EDIT FORM
   $(document).on('click', '.entries-list', function() {
-    //   console.log($(this));
       $('#inputId')[0].value = $(this)[0].id;
       return false;
   });
 
   // GET entry by ID
   $('#show-id-button').click(function() {
-    $.ajax({
-      type: 'GET',
-      url: '/api/entry/' + $('#inputId')[0].value,
-      success: function(data) {
-        showTable(data);
-      },
-      error: function(err) {
-        myNotify(`${err.status} - ${err.statusText}`, 'danger');
-        console.log(err);
-      }
-    });
+      $.ajax({
+          type: 'GET',
+          url: '/api/entry/' + $('#inputId')[0].value,
+          success: function(data) {
+              showTable(data);
+          },
+          error: function(err) {
+              myNotify(`${err.status} - ${err.statusText}`, 'danger');
+              console.log(err);
+          }
+      });
   });
 
   // DELETE entry by ID
   $('#delete-id-button').click(function() {
-    $.ajax({
-      type: 'DELETE',
-      url: '/api/entry/' + $('#inputId')[0].value,
-      success: function(response) {
-        myNotify(`Enrtry ID: ${$('#inputId')[0].value} deleted successfuly`, 'warning');
-        $('#inputId')[0].value = '';
-        showALLEntries();
-      },
-      error: function(err) {
-        myNotify(`${err.status} - ${err.statusText}`, 'danger');
-        console.log(err);
-      }
-    });
+      $.ajax({
+          type: 'DELETE',
+          url: '/api/entry/' + $('#inputId')[0].value,
+          success: function(response) {
+              myNotify(`Enrtry ID: ${$('#inputId')[0].value} deleted successfuly`, 'warning');
+              $('#inputId')[0].value = '';
+              showALLEntries();
+          },
+          error: function(err) {
+              myNotify(`${err.status} - ${err.statusText}`, 'danger');
+              console.log(err);
+          }
+      });
   });
 
   // POST NEW ENTRY BUTTON TEST
   $('#post-entry-button').click(function() {
-    $.ajax({
-      type: 'POST',
-      url: '/api/entries',
-      headers: { "X-CSRF-Token": $('input[type="hidden"]')[0].value },
-      dataType: "json",
-      data: {
-        user      : $('input[name="_userID"]')[0].value,
-        date      : new Date(),
-        sum       : 20.1,
-        category  : "Home",
-        comment   : "POST request from AJAX"
-      },
-      success: function(data) {
-        myNotify('New entry posted successfuly!', 'success');
-        showALLEntries();
-        console.log(data);
-      },
-      error: function(err) {
-        myNotify(`${err.status} - ${err.statusText}`, 'danger');
-        console.log(err);
-      }
-    });
+      $.ajax({
+          type: 'POST',
+          url: '/api/entries',
+          headers: { "X-CSRF-Token": $('input[type="hidden"]')[0].value },
+          dataType: "json",
+          data: {
+              user      : $('input[name="_userID"]')[0].value,
+              date      : new Date(),
+              sum       : 20.1,
+              category  : "Home",
+              comment   : "POST request from AJAX"
+          },
+          success: function(data) {
+              myNotify('New entry posted successfuly!', 'success');
+              showALLEntries();
+              console.log(data);
+          },
+          error: function(err) {
+              myNotify(`${err.status} - ${err.statusText}`, 'danger');
+              console.log(err);
+          }
+      });
   });
 
 });
