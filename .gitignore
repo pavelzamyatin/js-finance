@@ -4,6 +4,7 @@
 /dist
 /tmp
 /templates
+/uploads
 
 # dependencies
 /node_modules
