@@ -1,7 +1,9 @@
-var express         = require('express');
-var router          = require('../routes/api');
+// *** main dependencies *** //
 var config          = require('../config/config');
 var passport        = require('../config/passport');
+
+// *** routes *** //
+var router          = require('../routes/upload');
 
 // *** protect from CSRF *** ///
 var csrf            = require('csurf');

@@ -17,6 +17,8 @@
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.0.0",
+    "formidable": "^1.1.1",
+    "mocha": "^3.2.0",
     "moment": "^2.17.1",
     "mongoose": "^4.7.0",
     "passport": "^0.1.17",

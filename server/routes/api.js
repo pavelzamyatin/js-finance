@@ -1,8 +1,9 @@
+// *** main dependencies *** //
 var express     = require('express');
 var router      = express.Router();
 var Entry       = require('../models/entry');
 
-// addition modules
+// *** addition modules *** //
 var validator   = require('validator');
 var moment      = require('moment');
 
