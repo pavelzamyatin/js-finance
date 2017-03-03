@@ -3,7 +3,7 @@ var config          = require('../config/config');
 var passport        = require('../config/passport');
 
 // *** routes *** //
-var router          = require('../routes/upload');
+var router          = require('../routes/api');
 
 // *** protect from CSRF *** ///
 var csrf            = require('csurf');
@@ -23,6 +23,17 @@ router.get('/main', isLoggedIn, csrfProtection, function(req, res, next) {
   res.render('main', {
     sitename  : config.siteName,
     title     : config.siteName,
+    id        : req.user._id,
+    email     : req.user.local.email,
+    sess      : req.cookies['connect.sid'],
+    csrfToken : req.csrfToken()
+  });
+});
+
+router.get('/upload', isLoggedIn, csrfProtection, function(req, res, next) {
+  res.render('upload', {
+    sitename  : config.siteName,
+    title     : 'Upload page',
     id        : req.user._id,
     email     : req.user.local.email,
     sess      : req.cookies['connect.sid'],
