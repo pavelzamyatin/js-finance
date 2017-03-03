@@ -102,7 +102,7 @@ $(document).ready(function() {
   };
 
   // =======================================
-  // ============= MAIN ZONE ===============
+  // ============= BUTTONS =================
   // =======================================
 
   // SHOW ALL ENTRIES BUTTON
@@ -194,5 +194,31 @@ $(document).ready(function() {
           }
       });
   });
+
+  // =======================================
+  // ============= UPLOAD CSV ==============
+  // =======================================
+
+  // Parse CSV using papaparse.min.js   
+  $('#upload-input').on('change', function() {
+        $('#upload-input').parse({
+            config: {
+                header: false,
+                delimiter: ',',
+                complete: function(results, file) {
+                    console.log("This file done:", file, results.data);
+                }
+            },
+            complete: function() {
+                console.log("All files done!");
+            }
+        });
+    });
+
+    $('.upload-btn').on('click', function (){ 
+        $('#upload-input').click();
+        $('.progress-bar').text('0%');
+        $('.progress-bar').width('0%');
+    });
 
 });
