@@ -6,13 +6,10 @@
     <div class="col-xs-12 col-sm-8 col-md-offset-2">
 
         <h2>Upload data</h2>
-        <div class="progress progress-striped">
-            <div class="progress-bar progress-bar"></div>
-        </div>
         <button class="btn btn-success upload-btn" type="button">Upload File</button>
         
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input id="upload-input" type="file" name="uploads[]" multiple="multiple" style="display : none;">
+        <input id="upload-input" type="file" name="upload" multiple="multiple" style="display : none;">
         
         <hr>
 
@@ -22,5 +19,3 @@
     </div>
 
 </div>
-
-<script src="/js/upload.js"></script>
