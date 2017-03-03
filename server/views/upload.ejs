@@ -1,21 +1,55 @@
 <% include template.ejs %>
 <% include header.ejs %>
 
-<div class="container-fluid">
 
-    <div class="col-xs-12 col-sm-8 col-md-offset-2">
+<div class="container">
+    <div id="first-container" class="container-fluid" >
+        <div class="row">
 
-        <h2>Upload data</h2>
-        <button class="btn btn-success upload-btn" type="button">Upload File</button>
-        
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input id="upload-input" type="file" name="upload" multiple="multiple" style="display : none;">
-        
-        <hr>
+            <% include user.ejs %>
 
-        <p>Need help? <a href="/help">Help page</a>.</p>
-        <p>Or go back to <a href="/main">main page</a>.</p>
+            <div class="panel-group col-xs-12 col-sm-8 col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Upload data</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <button class="btn btn-success upload-btn" type="button">Upload File/s</button>
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input id="upload-input" type="file" name="upload" multiple="multiple" style="display : none;">
+                        </div>
+                        <!-- <div class="panel-footer">Panel Footer</div> -->
+                    </div>
+                </div>
+            </div> 
 
-    </div>
-
+            <div class="panel-group col-xs-12 col-sm-8 col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse2">Imported data</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Payee</th>
+                                        <th>Memo</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="import-data"></tbody>
+                            </table>
+                        </div>
+                        <!-- <div class="panel-footer">Panel Footer</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
