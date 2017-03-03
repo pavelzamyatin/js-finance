@@ -33,6 +33,9 @@ router.post('/upload', csrfProtection, function(req, res){
 
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true;
+  
+  //to keep the extensions of the file
+  form.keepExtensions = true;
 
   // store all uploads in the /uploads directory
   form.uploadDir = path.join(__dirname, '../uploads');
