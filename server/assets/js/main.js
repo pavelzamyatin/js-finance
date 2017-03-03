@@ -207,6 +207,20 @@ $(document).ready(function() {
                 delimiter: ',',
                 complete: function(results, file) {
                     console.log("This file done:", file, results.data);
+
+                    var newTable = [];
+                    for (let row of results.data.slice(8)) {
+                        if (row[0] == '') continue;
+                        newTable.push(`
+                            <tr>
+                            <td>${row[0]}</td>
+                            <td>${row[4]}</td>
+                            <td>${row[5]}</td>
+                            <td>${row[6]}</td>
+                            </tr>
+                            `);
+                    }
+                    $("#import-data").html(newTable.join(""));
                 }
             },
             complete: function() {
