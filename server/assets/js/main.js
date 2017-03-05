@@ -217,6 +217,15 @@ $(document).ready(function() {
                             <td>${row[4]}</td>
                             <td>${row[5]}</td>
                             <td>${row[6]}</td>
+                            <td>
+                                <select class="form-control" id="selectCategory" name="selectCategory">
+                                    <option>Home</option>
+                                    <option>Market</option>
+                                    <option>Electronics</option>
+                                    <option>Gifts</option>
+                                    <option>Cafe</option>
+                                </select>
+                            </td>
                             </tr>
                             `);
                     }
