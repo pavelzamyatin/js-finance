@@ -48,7 +48,7 @@ $(document).ready(function() {
   // ============ NEW ENTRY ZONE ===========
   // =======================================
 
-  $('#main-form').validator().on('submit', function(e) {
+  $('#new-entry-form').validator().on('submit', function(e) {
     var formData = $('form').serializeArray();
     // console.log(formData);
     if (e.isDefaultPrevented()) {
@@ -206,10 +206,10 @@ $(document).ready(function() {
                 header: false,
                 delimiter: ',',
                 complete: function(results, file) {
-                    console.log("This file done:", file, results.data);
-
                     var newTable = [];
+                    // remove header from the table
                     for (let row of results.data.slice(8)) {
+                        // skip emty row
                         if (row[0] == '') continue;
                         newTable.push(`
                             <tr>
